@@ -98,7 +98,7 @@
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
-            <enum type="AlgorithmSettings::SizeConstraints">AnySize</enum>
+            <enum type="AlgorithmSettings::SizeConstraints">WordAligned</enum>
             <key>forceSquared</key>
             <false/>
             <key>maxRects</key>
@@ -207,6 +207,26 @@
                 <rect>64,38,127,77</rect>
                 <key>scale9Paddings</key>
                 <rect>64,38,127,77</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../ui/icon_beach.png</key>
+            <key type="filename">../ui/icon_bg.png</key>
+            <key type="filename">../ui/icon_desert.png</key>
+            <key type="filename">../ui/icon_hills.png</key>
+            <key type="filename">../ui/icon_mountains.png</key>
+            <key type="filename">../ui/icon_transparent_bg.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>41,41,82,82</rect>
+                <key>scale9Paddings</key>
+                <rect>41,41,82,82</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

@@ -42,27 +42,11 @@ bool FarmScene::init()
     cocos2d::ui::ScrollView* view = units_view::createView(m_units, cocos2d::Vec2::ZERO, visibleSize);
 
     view->setAnchorPoint({ 0.0f, 0.0f });
+    view->setSwallowTouches(false);
 
     addChild(view);
 
-    cocos2d::ui::Button* back_button = cocos2d::ui::Button::create(
-        "back_icon.png",
-        "back_icon.png",
-        "back_icon.png",
-        cocos2d::ui::Widget::TextureResType::PLIST
-    );
-
-    using TouchType = cocos2d::ui::Widget::TouchEventType;
-    back_button->addTouchEventListener([](auto, TouchType event) {
-        if (event == TouchType::ENDED)
-        {
-            cocos2d::Director::getInstance()->popScene();
-        }
-    });
-    back_button->setPosition({ 0.0f, visibleSize.height });
-    back_button->setAnchorPoint({ 0.0f, 1.0f });
-
-    addChild(back_button);
+    initBack();
 
     return true;
 }

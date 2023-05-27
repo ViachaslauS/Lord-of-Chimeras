@@ -16,10 +16,10 @@ class FarmScene final : public BaseScene
 public:
     static FarmScene* create(std::vector<Unit>& units);
 
-    bool init() override;
-
 private:
     FarmScene(std::vector<Unit>& units);
+
+    bool init() override;
 
 private:
     std::vector<Unit*> m_selected_units;

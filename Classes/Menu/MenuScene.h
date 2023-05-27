@@ -16,12 +16,19 @@
 class MenuScene final: public BaseScene
 {
 public:
-    static cocos2d::Scene* create(std::vector<Unit>& units);
+    static MenuScene* create(std::vector<Unit>& units);
 
     bool init() override;
 
 private:
     MenuScene(std::vector<Unit>& units);
 
-    void toFarm(cocos2d::Ref* p_sender);
+    void initFarmButton();
+    void initMapButton();
+
+    template <class T>
+    void toScene(cocos2d::Ref*)
+    {
+        cocos2d::Director::getInstance()->pushScene(T::create(m_units));
+    }
 };

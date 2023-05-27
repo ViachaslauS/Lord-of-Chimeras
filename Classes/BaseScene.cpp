@@ -10,6 +10,7 @@
 #include <cocos/base/CCDirector.h>
 #include <cocos/2d/CCMenu.h>
 #include <cocos/2d/CCMenuItem.h>
+#include <cocos/ui/UIButton.h>
 
 BaseScene::BaseScene(std::vector<Unit>& units)
     : m_units(units)
@@ -33,7 +34,7 @@ bool BaseScene::init()
         "CloseSelected.png",
         CC_CALLBACK_1(BaseScene::menuCloseCallback, this));
 
-    auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
+    const cocos2d::Size visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
     cocos2d::Vec2 origin = cocos2d::Director::getInstance()->getVisibleOrigin();
 
     float x = origin.x + visibleSize.width - closeItem->getContentSize().width / 2;
@@ -45,4 +46,29 @@ bool BaseScene::init()
     this->addChild(menu, 1);
 
     return true;
+}
+
+void BaseScene::initBack()
+{
+    const cocos2d::Size visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
+
+    cocos2d::ui::Button* back_button = cocos2d::ui::Button::create(
+        "back_icon.png",
+        "back_icon.png",
+        "back_icon.png",
+        cocos2d::ui::Widget::TextureResType::PLIST
+    );
+
+    using TouchType = cocos2d::ui::Widget::TouchEventType;
+    back_button->addTouchEventListener([](auto, TouchType event) {
+        if (event == TouchType::ENDED)
+        {
+            cocos2d::Director::getInstance()->popScene();
+        }
+        });
+
+    back_button->setPosition({ 0.0f, visibleSize.height });
+    back_button->setAnchorPoint({ 0.0f, 1.0f });
+
+    addChild(back_button);
 }

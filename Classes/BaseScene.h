@@ -23,6 +23,8 @@ public:
 protected:
     BaseScene(std::vector<Unit>& units);
 
+    void initBack();
+
 protected:
     std::vector<Unit>& m_units;
 };

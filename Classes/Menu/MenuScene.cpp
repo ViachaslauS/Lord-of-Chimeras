@@ -8,6 +8,7 @@
 #include "MenuScene.h"
 
 #include "Farm/FarmScene.h"
+#include "Battle/GameMapScene.h"
 
 #include <cocos/base/CCDirector.h>
 #include <cocos/ui/UIButton.h>
@@ -37,22 +38,38 @@ bool MenuScene::init()
         return false;
     }
 
-    auto visible_size = cocos2d::Director::getInstance()->getVisibleSize();
-    cocos2d::Vec2 origin = cocos2d::Director::getInstance()->getVisibleOrigin();
-
-    auto to_farm_button = cocos2d::ui::Button::create();
-    to_farm_button->setTitleText("Farm");
-    to_farm_button->setTitleFontSize(24);
-
-    to_farm_button->setPosition(origin + visible_size * 0.2f);
-    to_farm_button->addTouchEventListener(CC_CALLBACK_1(MenuScene::toFarm, this));
-
-    addChild(to_farm_button);
+    initFarmButton();
+    initMapButton();
 
     return true;
 }
 
-void MenuScene::toFarm(cocos2d::Ref* p_sender)
+void MenuScene::initFarmButton()
 {
-    cocos2d::Director::getInstance()->pushScene(FarmScene::create(m_units));
+    const cocos2d::Size visible_size = cocos2d::Director::getInstance()->getVisibleSize();
+    const cocos2d::Vec2 origin = cocos2d::Director::getInstance()->getVisibleOrigin();
+
+    cocos2d::ui::Button* to_farm_btn = cocos2d::ui::Button::create();
+    to_farm_btn->setTitleText("Farm");
+    to_farm_btn->setTitleFontSize(24);
+
+    to_farm_btn->setPosition(origin + visible_size * 0.2f);
+    to_farm_btn->addTouchEventListener(CC_CALLBACK_1(MenuScene::toScene<FarmScene>, this));
+
+    addChild(to_farm_btn);
+}
+
+void MenuScene::initMapButton()
+{
+    const cocos2d::Size visible_size = cocos2d::Director::getInstance()->getVisibleSize();
+    const cocos2d::Vec2 origin = cocos2d::Director::getInstance()->getVisibleOrigin();
+
+    cocos2d::ui::Button* to_map_btn = cocos2d::ui::Button::create();
+    to_map_btn->setTitleText("Map");
+    to_map_btn->setTitleFontSize(24);
+
+    to_map_btn->setPosition(origin + visible_size * 0.5f);
+    to_map_btn->addTouchEventListener(CC_CALLBACK_1(MenuScene::toScene<GameMapScene>, this));
+
+    addChild(to_map_btn);
 }
