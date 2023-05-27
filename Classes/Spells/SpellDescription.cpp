@@ -5,13 +5,13 @@
  *
 \**************************************/
 
-#include "UnitDescription.h"
+#include "SpellDescription.h"
 
 #include <cocos/2d/CCSprite.h>
 
-UnitDescription* UnitDescription::create(const Unit& unit)
+SpellDescription* SpellDescription::create(const Spell& spell)
 {
-    UnitDescription* node = new UnitDescription(unit);
+    SpellDescription* node = new SpellDescription(spell);
     if (node && node->init())
     {
         node->autorelease();
@@ -22,12 +22,12 @@ UnitDescription* UnitDescription::create(const Unit& unit)
     return nullptr;
 }
 
-UnitDescription::UnitDescription(const Unit& unit)
-    : m_unit(unit)
+SpellDescription::SpellDescription(const Spell& spell)
+    : m_spell(spell)
 {
 }
 
-bool UnitDescription::init()
+bool SpellDescription::init()
 {
     if (Node::init() == false)
     {
@@ -46,5 +46,4 @@ bool UnitDescription::init()
 
     // ATTENTION: add info about unit
     // ....
-    // + add spells desc
 }

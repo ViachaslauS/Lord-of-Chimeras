@@ -98,7 +98,7 @@
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
-            <enum type="AlgorithmSettings::SizeConstraints">WordAligned</enum>
+            <enum type="AlgorithmSettings::SizeConstraints">AnySize</enum>
             <key>forceSquared</key>
             <false/>
             <key>maxRects</key>
@@ -122,10 +122,6 @@
         <key>dataFileNames</key>
         <map type="GFileNameMap">
             <key>data</key>
-            <struct type="DataFile">
-                <key>name</key>
-                <filename>../../Resources/sheets/ui.plist</filename>
-            </struct>
             <key>header</key>
             <key>source</key>
             <struct type="DataFile">
@@ -179,7 +175,11 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../ui/back_icon.png</key>
+            <key type="filename">../cultist/cultist_priest_idle_1.png</key>
+            <key type="filename">../cultist/cultist_priest_idle_2.png</key>
+            <key type="filename">../cultist/cultist_priest_idle_3.png</key>
+            <key type="filename">../cultist/cultist_priest_idle_4.png</key>
+            <key type="filename">../cultist/cultist_priest_idle_5.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -188,126 +188,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>20,20,40,40</rect>
+                <rect>50,50,100,100</rect>
                 <key>scale9Paddings</key>
-                <rect>20,20,40,40</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../ui/desc_panel.png</key>
-            <key type="filename">../ui/units_view_panel.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>64,38,127,77</rect>
-                <key>scale9Paddings</key>
-                <rect>64,38,127,77</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../ui/hp_bar.png</key>
-            <key type="filename">../ui/mp_bar.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>106,9,211,19</rect>
-                <key>scale9Paddings</key>
-                <rect>106,9,211,19</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../ui/hp_bar_back.png</key>
-            <key type="filename">../ui/mp_bar_back.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>111,9,222,19</rect>
-                <key>scale9Paddings</key>
-                <rect>111,9,222,19</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../ui/hp_bar_for.png</key>
-            <key type="filename">../ui/mp_bar_for.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>112,10,224,21</rect>
-                <key>scale9Paddings</key>
-                <rect>112,10,224,21</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../ui/icon_beach.png</key>
-            <key type="filename">../ui/icon_bg.png</key>
-            <key type="filename">../ui/icon_desert.png</key>
-            <key type="filename">../ui/icon_hills.png</key>
-            <key type="filename">../ui/icon_mountains.png</key>
-            <key type="filename">../ui/icon_transparent_bg.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>41,41,82,82</rect>
-                <key>scale9Paddings</key>
-                <rect>41,41,82,82</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../ui/small_button.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>17,11,35,23</rect>
-                <key>scale9Paddings</key>
-                <rect>17,11,35,23</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../ui/weather_cold.png</key>
-            <key type="filename">../ui/weather_drought.png</key>
-            <key type="filename">../ui/weather_hot.png</key>
-            <key type="filename">../ui/weather_rain.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>32,32,64,64</rect>
-                <key>scale9Paddings</key>
-                <rect>32,32,64,64</rect>
+                <rect>50,50,100,100</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -318,7 +201,7 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>../ui</filename>
+                    <filename>../cultist</filename>
                 </array>
             </struct>
         </map>

@@ -28,11 +28,24 @@ namespace unit_loader
         constexpr const char* SpriteAttr = "sprite";
         constexpr const char* NameAttr = "name";
 
+        constexpr const char* SpellsElement = "spells";
+        constexpr const char* SpellElement = "spell";
+        constexpr const char* SpellAttr = "spell_id";
+
+        constexpr const char* Resistances = "resistance_group";
+        constexpr const char* ResistanceEl = "resistance";
+        constexpr const char* ResistanceIdAttr = "resist_id";
+        constexpr const char* ResistanceValAttr = "resist_val";
     }
 
     const char* checkName(const char* name)
     {
         return name == nullptr ? "" : name;
+    }
+
+    const char* defaultInventoryFile()
+    {
+        return "data/inventory.xml";
     }
 
     Unit loadUnit(tinyxml2::XMLElement* element)
@@ -45,7 +58,7 @@ namespace unit_loader
         tinyxml2::XMLUtil::ToFloat(element->Attribute(HPRegenAttr), &unit.hp_regen);
         tinyxml2::XMLUtil::ToFloat(element->Attribute(MPRegenAttr), &unit.mp_regen);
 
-        tinyxml2::XMLUtil::ToUnsigned(element->Attribute(AttackAttr), &unit.attack);
+        tinyxml2::XMLUtil::ToFloat(element->Attribute(AttackAttr), &unit.attack);
 
         tinyxml2::XMLUtil::ToFloat(element->Attribute(AtkSpeedAttr), &unit.atk_speed);
 
@@ -54,6 +67,33 @@ namespace unit_loader
 
         unit.sprite_name = checkName(element->Attribute(SpriteAttr));
         unit.unit_name = checkName(element->Attribute(NameAttr));
+
+        tinyxml2::XMLElement* spells = element->FirstChildElement(SpellsElement);
+        if (spells != nullptr)
+        {
+            for (auto spell = spells->FirstChildElement(SpellElement); spell != nullptr; spell = spell->NextSiblingElement(SpellElement))
+            {
+                uint32_t spell_id = 0u;
+                tinyxml2::XMLUtil::ToUnsigned(spell->Attribute(SpellAttr), &spell_id);
+
+                unit.spells_id.push_back(spell_id);
+            }
+        }
+
+        tinyxml2::XMLElement* resist_el = element->FirstChildElement(Resistances);
+        if (resist_el != nullptr)
+        {
+            for (auto resist = resist_el->FirstChildElement(ResistanceEl); resist != nullptr; resist = resist->NextSiblingElement(ResistanceEl))
+            {
+                uint32_t resist_id = 0u;
+                float resist_val = 0.0f;
+
+                tinyxml2::XMLUtil::ToUnsigned(resist->Attribute(ResistanceIdAttr), &resist_id);
+                tinyxml2::XMLUtil::ToFloat(resist->Attribute(ResistanceValAttr), &resist_val);
+
+                unit.resistance[resist_id] = resist_val;
+            }
+        }
 
         return unit;
     }
@@ -76,6 +116,27 @@ namespace unit_loader
 
         element->SetAttribute(SpriteAttr, unit.sprite_name);
         element->SetAttribute(NameAttr, unit.unit_name);
+
+        tinyxml2::XMLElement* spells = doc.NewElement(SpellsElement);
+        for (auto spell_id : unit.spells_id)
+        {
+            tinyxml2::XMLElement* spellElement = doc.NewElement(SpellElement);
+            spellElement->SetAttribute(SpellAttr, spell_id);
+
+            spells->InsertEndChild(spellElement);
+        }
+        element->InsertEndChild(spells);
+
+        tinyxml2::XMLElement* resistances = doc.NewElement(Resistances);
+        for (auto resist : unit.resistance)
+        {
+            tinyxml2::XMLElement* resistEl = doc.NewElement(ResistanceEl);
+            resistEl->SetAttribute(ResistanceIdAttr, resist.first);
+            resistEl->SetAttribute(ResistanceValAttr, resist.second);
+
+            resistances->InsertEndChild(resistEl);
+        }
+        element->InsertEndChild(resistances);
 
         root->InsertEndChild(element);
     }

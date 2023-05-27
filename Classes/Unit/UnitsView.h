@@ -24,5 +24,5 @@ namespace cocos2d
 
 namespace units_view
 {
-    cocos2d::ui::ScrollView* createView(const std::vector<Unit>& units, cocos2d::Vec2 pos, cocos2d::Size size);
+    cocos2d::Node* createView(const std::vector<Unit>& units, cocos2d::Vec2 pos, cocos2d::Size size);
 }

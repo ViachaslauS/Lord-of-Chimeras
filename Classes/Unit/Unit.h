@@ -9,7 +9,22 @@
 
 #include <BattleEnvironment.h>
 
+#include <vector>
 #include <unordered_map>
+
+enum class UnitField
+{
+    HP,
+    MP,
+    HP_REGEN,
+    MP_REGEN,
+    ATTACK,
+    ATK_SPEED,
+    EVASION,
+    ACCURACY,
+
+    COUNT
+};
 
 struct Unit
 {
@@ -19,7 +34,7 @@ struct Unit
     float hp_regen = 0.0f;
     float mp_regen = 0.0f;
 
-    uint32_t attack = 1u;
+    float attack = 0.0f;
 
     float atk_speed = 1.0f;
 
@@ -28,23 +43,47 @@ struct Unit
 
     const char* sprite_name = "";
     const char* unit_name = "";
+
+    std::vector<uint32_t> spells_id;
+
+    std::unordered_map<uint32_t, float> resistance;
 };
 
-
-// TODO: move it to xml config file
-namespace standard_unit
+namespace unit_helper
 {
-    constexpr Unit StartUnit =
+    Unit generateUnit(uint32_t difficulty, uint32_t location_id);
+
+    template <class T>
+    T getValueByField(UnitField field, const Unit& unit)
     {
-        20.0f,       // hp
-        20.0f,       // mp
-        0.5f,        // hp_reg
-        0.5f,        // mp_reg
-        2u,          // attack
-        1.0f,        // atk_speed
-        0.0f,        // evasion
-        0.8f,        // accuracy
-        "ogre.png",  // sprite
-        "ogre",      // name
-    };
+        switch (field)
+        {
+            case UnitField::HP: return unit.hp; break;
+            case UnitField::MP: return unit.mp; break;
+            case UnitField::HP_REGEN: return unit.hp_regen; break;
+            case UnitField::MP_REGEN: return unit.mp_regen; break;
+            case UnitField::ATTACK: return unit.attack; break;
+            case UnitField::ATK_SPEED: return unit.atk_speed; break;
+            case UnitField::EVASION: return unit.evasion; break;
+            case UnitField::ACCURACY: return unit.accuracy; break;
+        }
+
+        return {};
+    }
+
+    template <class T>
+    void setValueByField(UnitField field, Unit& unit, T value)
+    {
+        switch (field)
+        {
+            case UnitField::HP: unit.hp = value; break;
+            case UnitField::MP: unit.mp = value; break;
+            case UnitField::HP_REGEN: unit.hp_regen = value; break;
+            case UnitField::MP_REGEN: unit.mp_regen = value; break;
+            case UnitField::ATTACK: unit.attack = value; break;
+            case UnitField::ATK_SPEED: unit.atk_speed = value; break;
+            case UnitField::EVASION: unit.evasion = value; break;
+            case UnitField::ACCURACY: unit.accuracy = value; break;
+        }
+    }
 }

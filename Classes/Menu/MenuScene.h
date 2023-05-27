@@ -26,9 +26,5 @@ private:
     void initFarmButton();
     void initMapButton();
 
-    template <class T>
-    void toScene(cocos2d::Ref*)
-    {
-        cocos2d::Director::getInstance()->pushScene(T::create(m_units));
-    }
+    void checkUnitsSize();
 };

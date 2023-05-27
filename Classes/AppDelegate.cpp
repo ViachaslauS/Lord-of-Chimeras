@@ -11,6 +11,7 @@
 // #include "GameScene.h"
 
 #include "Unit/UnitLoader.h"
+#include "Profile.h"
 
 // #define USE_AUDIO_ENGINE 1
 
@@ -25,19 +26,13 @@ static cocos2d::Size smallResolutionSize = cocos2d::Size(800, 600);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(800, 600);
 static cocos2d::Size largeResolutionSize = cocos2d::Size(800, 600);
 
-namespace
-{
-    constexpr const char* InventoryFileName = "data/inventory.xml";
-    constexpr const char* BadUnitsFileName = "config/bad_units.xml";
-}
-
 AppDelegate::AppDelegate()
 {
 }
 
 AppDelegate::~AppDelegate() 
 {
-    unit_loader::saveToFile(m_units, InventoryFileName);
+    unit_loader::saveToFile(m_units, unit_loader::defaultInventoryFile());
 #if USE_AUDIO_ENGINE
     AudioEngine::end();
 #endif
@@ -131,25 +126,26 @@ void AppDelegate::applicationWillEnterForeground() {
 void AppDelegate::initInventory()
 {
     cocos2d::UserDefault* userdef = cocos2d::UserDefault::getInstance();
-    userdef->setBoolForKey("first_launch", false);
+
+    // userdef->setBoolForKey("first_launch", false);
 
     if (userdef->getBoolForKey("first_launch") == false)
     {
         userdef->setBoolForKey("first_launch", true);
         userdef->flush();
 
-        m_units.push_back(standard_unit::StartUnit);
-        unit_loader::saveToFile(m_units, InventoryFileName);
+        unit_loader::saveToFile({}, unit_loader::defaultInventoryFile());
     }
     else
     {
-        m_units = unit_loader::loadFromFile(InventoryFileName);
+        m_units = unit_loader::loadFromFile(unit_loader::defaultInventoryFile());
     }
 }
 
 void AppDelegate::initSpriteCaches()
 {
-    auto spriteCache = SpriteFrameCache::getInstance();
+    SpriteFrameCache* spriteCache = SpriteFrameCache::getInstance();
     spriteCache->addSpriteFramesWithFile("sheets/ui.plist");
     spriteCache->addSpriteFramesWithFile("sheets/units.plist");
+    spriteCache->addSpriteFramesWithFile("sheets/cultist.plist");
 }

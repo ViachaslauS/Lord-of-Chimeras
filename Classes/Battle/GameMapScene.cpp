@@ -7,6 +7,8 @@
 
 #include "GameMapScene.h"
 
+#include "BattlePrepareScene.h"
+
 #include <cocos/2d/CCSprite.h>
 #include <cocos/base/CCDirector.h>
 #include <cocos/ui/UIButton.h>
@@ -63,23 +65,23 @@ void GameMapScene::initButtons()
 {
     const cocos2d::Size visible_size = cocos2d::Director::getInstance()->getVisibleSize();
 
-    for (const auto& info : buttons_info)
+    for (size_t i = 0u; i < buttons_info.size(); i++)
     {
         cocos2d::ui::Button* to_location_btn = cocos2d::ui::Button::create(
-            info.sprite_name,
-            info.sprite_name,
-            info.sprite_name,
+            buttons_info[i].sprite_name,
+            buttons_info[i].sprite_name,
+            buttons_info[i].sprite_name,
             cocos2d::ui::Widget::TextureResType::PLIST
         );
 
-        to_location_btn->addTouchEventListener([info](auto, cocos2d::ui::Widget::TouchEventType touch) {
-            if (touch == cocos2d::ui::Widget::TouchEventType::ENDED)
+        to_location_btn->addTouchEventListener([this, i](auto, cocos2d::ui::Widget::TouchEventType event) {
+            if (event == cocos2d::ui::Widget::TouchEventType::ENDED)
             {
-                // To battle prepare scene
+                cocos2d::Director::getInstance()->pushScene(BattlePrepareScene::create(m_units, i));
             }
         });
 
-        to_location_btn->setPosition({ visible_size.width * info.relative_pos.x, visible_size.height * info.relative_pos.y });
+        to_location_btn->setPosition({ visible_size.width * buttons_info[i].relative_pos.x, visible_size.height * buttons_info[i].relative_pos.y });
         addChild(to_location_btn);
     }
 }

@@ -4,63 +4,78 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>evade.png</key>
+            <key>cultist_priest_idle_1.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{128,128}</string>
+                <string>{200,200}</string>
                 <key>spriteSourceSize</key>
-                <string>{128,128}</string>
+                <string>{200,200}</string>
                 <key>textureRect</key>
-                <string>{{0,0},{128,128}}</string>
+                <string>{{0,0},{200,200}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>hit.png</key>
+            <key>cultist_priest_idle_2.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{128,128}</string>
+                <string>{200,200}</string>
                 <key>spriteSourceSize</key>
-                <string>{128,128}</string>
+                <string>{200,200}</string>
                 <key>textureRect</key>
-                <string>{{0,128},{128,128}}</string>
+                <string>{{200,0},{200,200}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>ogre.png</key>
+            <key>cultist_priest_idle_3.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{68,77}</string>
+                <string>{200,200}</string>
                 <key>spriteSourceSize</key>
-                <string>{68,77}</string>
+                <string>{200,200}</string>
                 <key>textureRect</key>
-                <string>{{0,256},{68,77}}</string>
+                <string>{{400,0},{200,200}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>spell_0.png</key>
+            <key>cultist_priest_idle_4.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{32,32}</string>
+                <string>{200,200}</string>
                 <key>spriteSourceSize</key>
-                <string>{32,32}</string>
+                <string>{200,200}</string>
                 <key>textureRect</key>
-                <string>{{68,256},{32,32}}</string>
+                <string>{{600,0},{200,200}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>cultist_priest_idle_5.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{200,200}</string>
+                <key>spriteSourceSize</key>
+                <string>{200,200}</string>
+                <key>textureRect</key>
+                <string>{{800,0},{200,200}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -74,13 +89,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>units.png</string>
+            <string>cultist.png</string>
             <key>size</key>
-            <string>{128,333}</string>
+            <string>{1000,200}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:bb72c7a1b7407f3442a2df2b5e58fd36:6d7f5a03c03fcbc6b51852fb25d528e0:80809bd6d8190eec449f2188311779b0$</string>
+            <string>$TexturePacker:SmartUpdate:4cde27b50a73a3c75690865c91fe70af:6d6771e0cffcca9248862a40e9ce4adf:84b3bc739922486012789a76ff498a2a$</string>
             <key>textureFileName</key>
-            <string>units.png</string>
+            <string>cultist.png</string>
         </dict>
     </dict>
 </plist>

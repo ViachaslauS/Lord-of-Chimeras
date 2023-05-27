@@ -39,10 +39,9 @@ bool FarmScene::init()
     }
 
     const cocos2d::Size visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
-    cocos2d::ui::ScrollView* view = units_view::createView(m_units, cocos2d::Vec2::ZERO, visibleSize);
+    cocos2d::Node* view = units_view::createView(m_units, cocos2d::Vec2::ZERO, visibleSize);
 
     view->setAnchorPoint({ 0.0f, 0.0f });
-    view->setSwallowTouches(false);
 
     addChild(view);
 

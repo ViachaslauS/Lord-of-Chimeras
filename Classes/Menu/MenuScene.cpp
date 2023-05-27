@@ -7,8 +7,10 @@
 
 #include "MenuScene.h"
 
+#include "Profile.h"
 #include "Farm/FarmScene.h"
 #include "Battle/GameMapScene.h"
+#include "Unit/UnitLoader.h"
 
 #include <cocos/base/CCDirector.h>
 #include <cocos/ui/UIButton.h>
@@ -29,6 +31,7 @@ MenuScene* MenuScene::create(std::vector<Unit>& units)
 MenuScene::MenuScene(std::vector<Unit>& units)
     : BaseScene(units)
 {
+    checkUnitsSize();
 }
 
 bool MenuScene::init()
@@ -54,7 +57,7 @@ void MenuScene::initFarmButton()
     to_farm_btn->setTitleFontSize(24);
 
     to_farm_btn->setPosition(origin + visible_size * 0.2f);
-    to_farm_btn->addTouchEventListener(CC_CALLBACK_1(MenuScene::toScene<FarmScene>, this));
+    to_farm_btn->addTouchEventListener(CC_CALLBACK_2(MenuScene::toScene<FarmScene>, this));
 
     addChild(to_farm_btn);
 }
@@ -69,7 +72,16 @@ void MenuScene::initMapButton()
     to_map_btn->setTitleFontSize(24);
 
     to_map_btn->setPosition(origin + visible_size * 0.5f);
-    to_map_btn->addTouchEventListener(CC_CALLBACK_1(MenuScene::toScene<GameMapScene>, this));
+    to_map_btn->addTouchEventListener(CC_CALLBACK_2(MenuScene::toScene<GameMapScene>, this));
 
     addChild(to_map_btn);
+}
+
+void MenuScene::checkUnitsSize()
+{
+    if (m_units.size() == 0u)
+    {
+        m_units.push_back(profile::StartUnit);
+        unit_loader::saveToFile(m_units, unit_loader::defaultInventoryFile());
+    }
 }

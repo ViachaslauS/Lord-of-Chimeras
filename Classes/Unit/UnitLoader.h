@@ -19,6 +19,8 @@ namespace tinyxml2
 
 namespace unit_loader
 {
+    const char* defaultInventoryFile();
+
     using Units = std::vector<Unit>;
 
     Unit loadUnit(tinyxml2::XMLElement* element);

@@ -10,6 +10,7 @@
 #include "Unit/Unit.h"
 
 #include <cocos/2d/CCScene.h>
+#include <cocos/ui/UIWidget.h>
 
 class BaseScene : public cocos2d::Scene
 {
@@ -24,6 +25,15 @@ protected:
     BaseScene(std::vector<Unit>& units);
 
     void initBack();
+
+    template <class T>
+    void toScene(cocos2d::Ref*, cocos2d::ui::Widget::TouchEventType touch)
+    {
+        if (touch == cocos2d::ui::Widget::TouchEventType::ENDED)
+        {
+            cocos2d::Director::getInstance()->pushScene(T::create(m_units));
+        }
+    }
 
 protected:
     std::vector<Unit>& m_units;
