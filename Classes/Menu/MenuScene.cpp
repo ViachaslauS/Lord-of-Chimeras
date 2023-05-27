@@ -12,7 +12,7 @@
 #include <cocos/base/CCDirector.h>
 #include <cocos/ui/UIButton.h>
 
-cocos2d::Scene* MenuScene::create(std::vector<Unit>& units)
+MenuScene* MenuScene::create(std::vector<Unit>& units)
 {
     MenuScene* scene = new MenuScene(units);
     if (scene && scene->init())

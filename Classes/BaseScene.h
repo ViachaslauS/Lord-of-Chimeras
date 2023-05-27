@@ -14,7 +14,7 @@
 class BaseScene : public cocos2d::Scene
 {
 public:
-    static cocos2d::Scene* create(std::vector<Unit>& units) = delete;
+    static BaseScene* create(std::vector<Unit>& units) = delete;
 
     virtual void menuCloseCallback(cocos2d::Ref* p_sender);
 

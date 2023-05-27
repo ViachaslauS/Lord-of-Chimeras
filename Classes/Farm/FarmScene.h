@@ -14,7 +14,7 @@
 class FarmScene final : public BaseScene
 {
 public:
-    static cocos2d::Scene* create(std::vector<Unit>& units);
+    static FarmScene* create(std::vector<Unit>& units);
 
     bool init() override;
 

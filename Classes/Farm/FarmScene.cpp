@@ -13,7 +13,7 @@
 #include <cocos/ui/UIScrollView.h>
 #include <cocos/ui/UIButton.h>
 
-cocos2d::Scene* FarmScene::create(std::vector<Unit>& units)
+FarmScene* FarmScene::create(std::vector<Unit>& units)
 {
     FarmScene* scene = new FarmScene(units);
     if (scene && scene->init())
