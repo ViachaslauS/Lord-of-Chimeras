@@ -19,6 +19,8 @@
 #include "audio/include/AudioEngine.h"
 #endif
 
+// GUID: {663D1284-3ACF-4C0B-AABD-45028AD4EDFF}
+
 USING_NS_CC;
 
 static cocos2d::Size designResolutionSize = cocos2d::Size(800, 600);

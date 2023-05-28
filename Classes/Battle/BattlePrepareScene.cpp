@@ -7,7 +7,7 @@
 
 #include "BattlePrepareScene.h"
 
-#include "BattleScene.h"
+#include "Battle/BattleScene.h"
 
 #include "Profile.h"
 

@@ -40,6 +40,7 @@ MenuScene::MenuScene(std::vector<Unit>& units)
 
 bool MenuScene::init()
 {
+    CCLOG("[MENUSCENE]: start init btns\n");
     if (!BaseScene::init())
     {
         return false;

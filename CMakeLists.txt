@@ -29,6 +29,12 @@ set(APP_NAME LordOfChimeras)
 
 project(${APP_NAME})
 
+if (MSVC)
+    add_compile_options("/W4")
+else()
+    add_compile_options("-Wall")
+endif()
+
 if(XCODE)
     if(NOT DEFINED CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET)
         SET (CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET 8.0)

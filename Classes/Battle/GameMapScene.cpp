@@ -7,7 +7,7 @@
 
 #include "GameMapScene.h"
 
-#include "BattlePrepareScene.h"
+#include "Battle/BattlePrepareScene.h"
 
 #include <cocos/2d/CCSprite.h>
 #include <cocos/base/CCDirector.h>
@@ -59,6 +59,7 @@ bool GameMapScene::init()
     const cocos2d::Size visible_size = cocos2d::Director::getInstance()->getVisibleSize();
 
     cocos2d::Sprite* bg = cocos2d::Sprite::create("background/castle.png");
+    CC_ASSERT(bg != nullptr);
     bg->setAnchorPoint({ 0.5f, 0.5f });
     bg->setPosition(visible_size * 0.5f);
 
@@ -67,6 +68,8 @@ bool GameMapScene::init()
     initButtons();
 
     initBack();
+
+    return true;
 }
 
 void GameMapScene::initButtons()
