@@ -34,18 +34,18 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>ogre.png</key>
+            <key>knight.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{68,77}</string>
+                <string>{32,32}</string>
                 <key>spriteSourceSize</key>
-                <string>{68,77}</string>
+                <string>{32,32}</string>
                 <key>textureRect</key>
-                <string>{{0,256},{68,77}}</string>
+                <string>{{0,256},{32,32}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -60,7 +60,187 @@
                 <key>spriteSourceSize</key>
                 <string>{32,32}</string>
                 <key>textureRect</key>
-                <string>{{68,256},{32,32}}</string>
+                <string>{{32,256},{32,32}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>spell_1.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{32,32}</string>
+                <key>spriteSourceSize</key>
+                <string>{32,32}</string>
+                <key>textureRect</key>
+                <string>{{64,256},{32,32}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>spell_10.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{32,32}</string>
+                <key>spriteSourceSize</key>
+                <string>{32,32}</string>
+                <key>textureRect</key>
+                <string>{{96,320},{32,32}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>spell_11.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{32,32}</string>
+                <key>spriteSourceSize</key>
+                <string>{32,32}</string>
+                <key>textureRect</key>
+                <string>{{0,352},{32,32}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>spell_2.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{32,32}</string>
+                <key>spriteSourceSize</key>
+                <string>{32,32}</string>
+                <key>textureRect</key>
+                <string>{{96,256},{32,32}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>spell_3.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{32,32}</string>
+                <key>spriteSourceSize</key>
+                <string>{32,32}</string>
+                <key>textureRect</key>
+                <string>{{0,288},{32,32}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>spell_4.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{32,32}</string>
+                <key>spriteSourceSize</key>
+                <string>{32,32}</string>
+                <key>textureRect</key>
+                <string>{{32,288},{32,32}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>spell_5.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{32,32}</string>
+                <key>spriteSourceSize</key>
+                <string>{32,32}</string>
+                <key>textureRect</key>
+                <string>{{64,288},{32,32}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>spell_6.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{32,32}</string>
+                <key>spriteSourceSize</key>
+                <string>{32,32}</string>
+                <key>textureRect</key>
+                <string>{{96,288},{32,32}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>spell_7.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{32,32}</string>
+                <key>spriteSourceSize</key>
+                <string>{32,32}</string>
+                <key>textureRect</key>
+                <string>{{0,320},{32,32}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>spell_8.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{32,32}</string>
+                <key>spriteSourceSize</key>
+                <string>{32,32}</string>
+                <key>textureRect</key>
+                <string>{{32,320},{32,32}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>spell_9.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{32,32}</string>
+                <key>spriteSourceSize</key>
+                <string>{32,32}</string>
+                <key>textureRect</key>
+                <string>{{64,320},{32,32}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>unit_0.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{68,77}</string>
+                <key>spriteSourceSize</key>
+                <string>{68,77}</string>
+                <key>textureRect</key>
+                <string>{{32,352},{68,77}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -76,9 +256,9 @@
             <key>realTextureFileName</key>
             <string>units.png</string>
             <key>size</key>
-            <string>{128,333}</string>
+            <string>{128,429}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:bb72c7a1b7407f3442a2df2b5e58fd36:6d7f5a03c03fcbc6b51852fb25d528e0:80809bd6d8190eec449f2188311779b0$</string>
+            <string>$TexturePacker:SmartUpdate:0be859c2561b1da8c64f11186b30187b:3c484ccfa7f9aab09936001223e2de65:80809bd6d8190eec449f2188311779b0$</string>
             <key>textureFileName</key>
             <string>units.png</string>
         </dict>

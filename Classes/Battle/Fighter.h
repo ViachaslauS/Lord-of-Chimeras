@@ -37,7 +37,7 @@ public:
     const Unit& getBaseUnit() const;
     const Unit& getActiveUnit() const;
 
-    void setFighterAnimation(cocos2d::Vector<cocos2d::SpriteFrame*>&& frames);
+    cocos2d::Sprite* setFighterAnimation(cocos2d::Vector<cocos2d::SpriteFrame*>&& frames);
 
     bool isDead() const;
 
@@ -77,6 +77,8 @@ private:
 
     cocos2d::ui::Scale9Sprite* m_hp_bar = nullptr;
     cocos2d::ui::Scale9Sprite* m_mp_bar = nullptr;
+
+    cocos2d::Node* m_unit_desc = nullptr;
 
     cocos2d::Node* m_spell_desc = nullptr;
     int m_curr_spell = -1;

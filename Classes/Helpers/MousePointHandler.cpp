@@ -63,5 +63,7 @@ namespace mouse_point_handler
             const bool contain_result = containPoint(node, untransformed);
             test_result(node, contain_result);
         };
+
+        node->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, node);
     }
 }

@@ -9,8 +9,8 @@
 
 #include "BaseScene.h"
 
+#include "BattleEnvironment.h"
 #include "FighterAI.h"
-
 #include "Profile.h"
 
 #include <memory>
@@ -49,7 +49,7 @@ private:
 
     void startBattle();
 
-    void initTextLabel(const char* text, std::function<void()> callback);
+    void initTextLabel(const char* text, std::function<void()> callback, float duration = 0.0f);
     void initBackground();
 
     void tryAttack(Fighter* attacker, Fighter* defencer);
@@ -68,6 +68,8 @@ private:
     uint32_t selectEnvironmentGroup(EnvironmentInfluence influence);
 
     void damageEnvironmentStat(EnvironmentInfluence influence, UnitField field, Fighter* target, float increase_by_percent);
+
+    cocos2d::Node* createLabel(std::string text);
    
 private:
     BattleCtx m_ctx;

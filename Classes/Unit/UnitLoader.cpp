@@ -8,6 +8,7 @@
 #include "UnitLoader.h"
 
 #include <cocos/platform/CCFileUtils.h>
+#include <cocos/base/ccUTF8.h>
 
 #include <tinyxml2.h>
 
@@ -65,7 +66,11 @@ namespace unit_loader
         tinyxml2::XMLUtil::ToFloat(element->Attribute(EvasionAttr), &unit.evasion);
         tinyxml2::XMLUtil::ToFloat(element->Attribute(AccuracyAttr), &unit.accuracy);
 
-        unit.sprite_name = checkName(element->Attribute(SpriteAttr));
+        // char* newName = new char();
+        // strcpy(newName, element->Attribute(SpriteAttr));
+
+        unit.sprite_name = element->Attribute(SpriteAttr);
+        
         unit.unit_name = checkName(element->Attribute(NameAttr));
 
         tinyxml2::XMLElement* spells = element->FirstChildElement(SpellsElement);
@@ -114,8 +119,8 @@ namespace unit_loader
         element->SetAttribute(EvasionAttr, unit.evasion);
         element->SetAttribute(AccuracyAttr, unit.accuracy);
 
-        element->SetAttribute(SpriteAttr, unit.sprite_name);
-        element->SetAttribute(NameAttr, unit.unit_name);
+        element->SetAttribute(SpriteAttr, unit.sprite_name.c_str());
+        element->SetAttribute(NameAttr, unit.unit_name.c_str());
 
         tinyxml2::XMLElement* spells = doc.NewElement(SpellsElement);
         for (auto spell_id : unit.spells_id)

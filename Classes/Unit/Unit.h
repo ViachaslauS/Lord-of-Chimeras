@@ -7,10 +7,11 @@
 
 #pragma once
 
-#include <BattleEnvironment.h>
+#include "BattleEnvironment.h"
 
 #include <vector>
 #include <unordered_map>
+#include <string>
 
 enum class UnitField
 {
@@ -41,8 +42,8 @@ struct Unit
     float evasion = 0.0f;
     float accuracy = 0.5f;
 
-    const char* sprite_name = "";
-    const char* unit_name = "";
+    std::string sprite_name = "";
+    std::string unit_name = "";
 
     std::vector<uint32_t> spells_id;
 
@@ -52,6 +53,11 @@ struct Unit
 namespace unit_helper
 {
     Unit generateUnit(uint32_t difficulty, uint32_t location_id);
+
+    Unit mergeUnits(const Unit& first, const Unit& second);
+
+    const char* getValueName(UnitField field);
+    const char* getWeatherName(EnvironmentInfluence infl);
 
     template <class T>
     T getValueByField(UnitField field, const Unit& unit)

@@ -18,18 +18,23 @@
 #include <cocos/2d/CCLabel.h>
 #include <cocos/2d/CCSprite.h>
 #include <cocos/2d/CCSpriteFrameCache.h>
-
 #include <cocos/2d/CCActionEase.h>
 #include <cocos/2d/CCActionInterval.h>
 #include <cocos/2d/CCActionInstant.h>
+
+#include <cocos/ui/UIButton.h>
 
 #include <unordered_map>
 
 namespace
 {
     constexpr float BattleStartDelay = 3.0f;
-    constexpr uint32_t CultistSprites = 5u;
-    constexpr const char* CultistFileHead = "cultist_priest_idle_";
+    constexpr uint32_t CultistFrames = 5u;
+    constexpr const char* PlayerFileHead = "cultist_priest_idle_";
+
+    constexpr const char* EnemyFileHead = "enemies/knight_";
+    const cocos2d::Size EnemyFileSize = { 672.0f, 96.0f };
+    constexpr uint32_t EnemyFrames = 6u;
 
     const std::unordered_map<EnvironmentInfluence, const char*> WeatherSpritesMapping = {
         { EnvironmentInfluence::Hot, "weather_hot.png" },
@@ -44,6 +49,14 @@ namespace
         "background/beach.png",
         "background/desert.png",
         "background/forest.png"
+    };
+
+    const std::array<const char*, 4> map_enemy_sprites =
+    {
+        "mountain.png",
+        "beach.png",
+        "desert.png",
+        "forest.png"
     };
 }
 
@@ -78,23 +91,53 @@ bool BattleScene::init()
 
     initBackground();
 
+    const cocos2d::Size visible_size = cocos2d::Director::getInstance()->getVisibleSize();
+
+    cocos2d::Label* battle_desc = cocos2d::Label::create();
+    battle_desc->setDimensions(300.0f, 300.0f);
+    battle_desc->setString("You can use spells (if you have them)\nby clicking on them. You don\'t need to\nattack - only use spells.");
+    battle_desc->setSystemFontSize(20);
+    battle_desc->setAnchorPoint({ 0.5f, 0.5f });
+    battle_desc->setHorizontalAlignment(cocos2d::TextHAlignment::CENTER);
+    battle_desc->setVerticalAlignment(cocos2d::TextVAlignment::CENTER);
+    battle_desc->setTextColor(cocos2d::Color4B::YELLOW);
+    battle_desc->setPosition({ visible_size.width * 0.8f, visible_size.height * 0.9f });
+
+    addChild(battle_desc);
+
     initDurationLabel();
 
     initPlayer();
     initEnemy();
+
+    cocos2d::ui::Button* leave_btn = cocos2d::ui::Button::create(
+        "large_button.png",
+        "large_button.png",
+        "large_button.png",
+        cocos2d::ui::Widget::TextureResType::PLIST
+    );
+
+    leave_btn->setTitleText("Give up");
+    leave_btn->setTitleFontSize(24);
+
+    leave_btn->setPosition({ visible_size.width * 0.5f, visible_size.height * 0.9f });
+
+    leave_btn->addTouchEventListener(CC_CALLBACK_0(BattleScene::lose, this));
+
+    addChild(leave_btn);
 
     return true;
 }
 
 void BattleScene::update(float dt)
 {
-    m_battle_duration += dt;
-    m_duration_label->setString(std::to_string(std::abs(static_cast<int>(m_battle_duration))));
-    
     if (m_play_end)
     {
         return;
     }
+
+    m_battle_duration += dt;
+    m_duration_label->setString(std::to_string(std::abs(static_cast<int>(m_battle_duration))));
 
     if (m_started == false && m_battle_duration > 0.0f)
     {
@@ -125,7 +168,7 @@ void BattleScene::update(float dt)
         m_play_end = true;
         initTextLabel("You win!", [this]() {
             win();
-        });
+        }, 1.0f);
         return;
     }
     if (m_player->isDead())
@@ -133,7 +176,7 @@ void BattleScene::update(float dt)
         m_play_end = true;
         initTextLabel("You lose!", [this]() {
            lose();
-        });
+        }, 1.0f);
         return;
     }
 }
@@ -147,7 +190,7 @@ void BattleScene::initDurationLabel()
     m_duration_label->setAnchorPoint({ 0.5f, 0.5f });
 
     const cocos2d::Size visible_size = cocos2d::Director::getInstance()->getVisibleSize();
-    m_duration_label->setPosition({ visible_size.width * 0.5f, visible_size.height * 0.9f });
+    m_duration_label->setPosition({ visible_size.width * 0.5f, visible_size.height * 0.7f });
 
     addChild(m_duration_label);
 
@@ -167,20 +210,19 @@ void BattleScene::initPlayer()
 
     cocos2d::SpriteFrameCache* sprite_cache = cocos2d::SpriteFrameCache::getInstance();
 
-    //auto frame = sprite_cache->getSpriteFrameByName("cultist.png");
-
-    //cocos2d::Texture2D* player_texture = frame->getTexture();
-
-    //const float step = player_texture->getContentSize().width / CultistSprites;
-
-    for (size_t i = 0u; i < CultistSprites; i++)
+    for (size_t i = 0u; i < CultistFrames; i++)
     {
         frames.pushBack(
-            sprite_cache->getSpriteFrameByName(std::string(CultistFileHead) + std::to_string(i + 1) + ".png")
+            sprite_cache->getSpriteFrameByName(std::string(PlayerFileHead) + std::to_string(i + 1) + ".png")
         );
     }
 
-    m_player->setFighterAnimation(std::move(frames));
+    auto fighter_sprite = m_player->setFighterAnimation(std::move(frames));
+
+    if (fighter_sprite != nullptr)
+    {
+        fighter_sprite->setPosition({ 0.0f, -20.0f });
+    }
 }
 
 void BattleScene::initEnemy()
@@ -193,6 +235,26 @@ void BattleScene::initEnemy()
     m_enemy->setPosition({ visible_size.width * 0.7f, visible_size.height * 0.5f });
 
     addChild(m_enemy);
+
+    cocos2d::Vector<cocos2d::SpriteFrame*> frames;
+
+    cocos2d::SpriteFrameCache* sprite_cache = cocos2d::SpriteFrameCache::getInstance();
+    const float frame_step = EnemyFileSize.width / EnemyFrames;
+    for (size_t i = 0u; i < EnemyFrames; i++)
+    {
+        frames.pushBack(
+            cocos2d::SpriteFrame::create(std::string(EnemyFileHead) + map_enemy_sprites[m_ctx.location_id],
+                cocos2d::Rect(frame_step * i, 0.0f, frame_step, EnemyFileSize.height))
+        );
+    }
+
+    auto fighter_sprite = m_enemy->setFighterAnimation(std::move(frames));
+    if (fighter_sprite != nullptr)
+    {
+        fighter_sprite->setFlippedX(true);
+        fighter_sprite->setScale(2.5f);
+        fighter_sprite->setPosition({ 0.0f, 10.0f });
+    }
 }
 
 void BattleScene::startBattle()
@@ -202,7 +264,7 @@ void BattleScene::startBattle()
     });
 }
 
-void BattleScene::initTextLabel(const char* text, std::function<void()> callback)
+void BattleScene::initTextLabel(const char* text, std::function<void()> callback, float duration)
 {
     const cocos2d::Size visible_size = cocos2d::Director::getInstance()->getVisibleSize();
 
@@ -217,10 +279,11 @@ void BattleScene::initTextLabel(const char* text, std::function<void()> callback
     cocos2d::ScaleTo* scale_action = cocos2d::ScaleTo::create(0.5f, 1.0f);
     cocos2d::FadeOut* fade_out = cocos2d::FadeOut::create(0.2f);
 
+    cocos2d::DelayTime* delay = cocos2d::DelayTime::create(duration);
     cocos2d::ActionInstant* instant_action = cocos2d::RemoveSelf::create();
     cocos2d::ActionInstant* callback_action = cocos2d::CallFunc::create(callback);
 
-    cocos2d::Sequence* sequence = cocos2d::Sequence::create(scale_action, fade_out, instant_action, callback_action, nullptr);
+    cocos2d::Sequence* sequence = cocos2d::Sequence::create(scale_action, delay, fade_out, instant_action, callback_action, nullptr);
     
     start_label->runAction(sequence);
 
@@ -312,7 +375,7 @@ void BattleScene::handleCast(Fighter* caster, Fighter* defencer)
         {
             defencer->decreaseStat(spell.value_field, spell.value);
         }
-        if (spell.influence != m_currentEnvironment)
+        if (spell.influence != m_currentEnvironment && spell.influence != EnvironmentInfluence::None)
         {
             handleInfluenceChange(spell.influence);
         }
@@ -371,7 +434,7 @@ void BattleScene::setupWeatherSprite()
     if (m_weather_sprite != nullptr)
     {
         removeChild(m_weather_sprite);
-        CC_SAFE_DELETE(m_weather_sprite);
+        m_weather_sprite = nullptr;
     }
 
     if (m_currentEnvironment == EnvironmentInfluence::None)
@@ -386,6 +449,59 @@ void BattleScene::setupWeatherSprite()
     m_weather_sprite->setAnchorPoint({ 0.0f, 1.0f });
     m_weather_sprite->setPosition({ 0.0f, getContentSize().height });
 
+    cocos2d::Sprite* weather_info = cocos2d::Sprite::createWithSpriteFrameName("weather_panel.png");
+    weather_info->setAnchorPoint({ 0.0f, 0.5f });
+    weather_info->setPosition({ m_weather_sprite->getContentSize().width, m_weather_sprite->getContentSize().height * 0.5f });
+    
+    const cocos2d::Size info_size = weather_info->getContentSize();
+
+    switch (m_currentEnvironment)
+    {
+    case EnvironmentInfluence::None:
+        break;
+    case EnvironmentInfluence::Hot:
+    {
+        auto hp_regen = createLabel("decrease hp regen");
+        hp_regen->setPosition(info_size * 0.5f);
+        weather_info->addChild(hp_regen);
+        break;
+    }
+    case EnvironmentInfluence::Cold:
+    {
+        auto mp_regen = createLabel("decrease mp regen");
+        mp_regen->setPosition({ info_size.width * 0.5f, info_size.height * 0.3f });
+        weather_info->addChild(mp_regen);
+
+        auto atk_speed = createLabel("decrease atk speed");
+        atk_speed->setPosition({ info_size.width * 0.5f, info_size.height * 0.6f });
+        weather_info->addChild(atk_speed);
+        break;
+    }
+    case EnvironmentInfluence::Rain:
+    {
+        auto evasion = createLabel("increase evasion");
+        evasion->setPosition({ info_size.width * 0.5f, info_size.height * 0.3f });
+        weather_info->addChild(evasion);
+
+        auto hp_regen = createLabel("increase hp regen");
+        hp_regen->setPosition({ info_size.width * 0.5f, info_size.height * 0.6f });
+        weather_info->addChild(hp_regen);
+        break;
+    }
+    case EnvironmentInfluence::Drought:
+    {
+        auto attack = createLabel("increase attack");
+        attack->setPosition({ info_size.width * 0.5f, info_size.height * 0.3f });
+        weather_info->addChild(attack);
+
+        auto atk_speed = createLabel("increase atk speed");
+        atk_speed->setPosition({ info_size.width * 0.5f, info_size.height * 0.6f });
+        weather_info->addChild(atk_speed);
+        break;
+    }
+    }
+
+    m_weather_sprite->addChild(weather_info);
     addChild(m_weather_sprite);
 }
 
@@ -446,4 +562,14 @@ void BattleScene::damageEnvironmentStat(EnvironmentInfluence influence, UnitFiel
     float new_val = old * (increase_by_percent + std::abs(resist / std::max(increase_by_percent, 0.01f)));
 
     target->decreaseStat(field, -new_val);
+}
+
+cocos2d::Node* BattleScene::createLabel(std::string text)
+{
+    cocos2d::Label* label = cocos2d::Label::create();
+    label->setString(text);
+    label->setSystemFontSize(20);
+    label->setAnchorPoint({ 0.5f, 0.5f });
+
+    return label;
 }

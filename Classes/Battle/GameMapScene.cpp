@@ -56,6 +56,14 @@ bool GameMapScene::init()
         return false;
     }
 
+    const cocos2d::Size visible_size = cocos2d::Director::getInstance()->getVisibleSize();
+
+    cocos2d::Sprite* bg = cocos2d::Sprite::create("background/castle.png");
+    bg->setAnchorPoint({ 0.5f, 0.5f });
+    bg->setPosition(visible_size * 0.5f);
+
+    addChild(bg);
+
     initButtons();
 
     initBack();

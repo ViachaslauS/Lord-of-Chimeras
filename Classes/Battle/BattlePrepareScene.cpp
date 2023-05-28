@@ -47,9 +47,28 @@ bool BattlePrepareScene::init()
     {
         return false;
     }
+    const cocos2d::Size visible_size = cocos2d::Director::getInstance()->getVisibleSize();
 
-    initLevels();
+    cocos2d::Sprite* bg = cocos2d::Sprite::create("background/castle.png");
+    bg->setAnchorPoint({ 0.5f, 0.5f });
+    bg->setPosition(visible_size * 0.5f);
+
+    addChild(bg);
+
+    cocos2d::Label* prepare_desc = cocos2d::Label::create();
+    prepare_desc->setDimensions(300.0f, 300.0f);
+    prepare_desc->setString("Select 1 chimera\nand go to any stage!\nBe careful, if you lose, you \nwill also lose the chimera");
+    prepare_desc->setSystemFontSize(20);
+    prepare_desc->setAnchorPoint({ 0.5f, 0.5f });
+    prepare_desc->setHorizontalAlignment(cocos2d::TextHAlignment::CENTER);
+    prepare_desc->setVerticalAlignment(cocos2d::TextVAlignment::CENTER);
+    prepare_desc->setTextColor(cocos2d::Color4B::YELLOW);
+    prepare_desc->setPosition({ visible_size.width * 0.8f, visible_size.height * 0.5f });
+
+    addChild(prepare_desc);
+
     initUnitSelector();
+    initLevels();
 
     initBack();
 
@@ -101,7 +120,6 @@ void BattlePrepareScene::initUnitSelector()
     const cocos2d::Size visible_size = cocos2d::Director::getInstance()->getVisibleSize();
 
     m_selected_holder = cocos2d::Node::create();
-    m_selected_holder->setPosition({ visible_size.width * 0.2f, visible_size.height * 0.5f });
     addChild(m_selected_holder);
 
     cocos2d::Node* units = units_view::createView(m_units, cocos2d::Vec2::ZERO, visible_size);
@@ -136,13 +154,10 @@ void BattlePrepareScene::updateSelected(uint32_t idx)
 
     m_selected_holder->removeAllChildren();
 
+    const cocos2d::Size visible_size = cocos2d::Director::getInstance()->getVisibleSize();
+
     UnitDescription* desc = UnitDescription::create(m_units[idx]);
-    desc->setPosition({ 0.0f, desc->getContentSize().height * 0.5f });
+    desc->setPosition(convertToNodeSpace({ desc->getContentSize().width * 0.5f, visible_size.height * 0.5f }));
 
     m_selected_holder->addChild(desc);
-
-    cocos2d::Sprite* sprite = cocos2d::Sprite::createWithSpriteFrameName(m_units[idx].sprite_name);
-    sprite->setPosition({ 0.0f, -sprite->getContentSize().height * 0.5f });
-
-    m_selected_holder->addChild(sprite);
 }

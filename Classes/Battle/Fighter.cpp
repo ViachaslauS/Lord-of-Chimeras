@@ -9,6 +9,7 @@
 
 #include "Helpers/MousePointHandler.h"
 #include "Spells/SpellDescription.h"
+#include "Unit/UnitDescription.h"
 
 #include <cocos/base/CCDirector.h>
 
@@ -64,11 +65,11 @@ const Unit& Fighter::getActiveUnit() const
     return m_active_unit;
 }
 
-void Fighter::setFighterAnimation(cocos2d::Vector<cocos2d::SpriteFrame*>&& frames)
+cocos2d::Sprite* Fighter::setFighterAnimation(cocos2d::Vector<cocos2d::SpriteFrame*>&& frames)
 {
     if (frames.size() == 0u)
     {
-        return;
+        return nullptr;
     }
 
     cocos2d::Sprite* fighter_sprite = cocos2d::Sprite::createWithSpriteFrame(frames.at(0)->clone());
@@ -77,9 +78,29 @@ void Fighter::setFighterAnimation(cocos2d::Vector<cocos2d::SpriteFrame*>&& frame
     cocos2d::Animate* animate = cocos2d::Animate::create(animation);
     fighter_sprite->runAction(cocos2d::RepeatForever::create(animate));
 
-    fighter_sprite->setAnchorPoint({ 0.5f, 0.75f });
+    fighter_sprite->setAnchorPoint({ 0.5f, 0.5f });
 
     addChild(fighter_sprite);
+
+    auto desc_callback = [this](cocos2d::Node*, bool result) {
+        if (result)
+        {
+            if (m_unit_desc == nullptr)
+            {
+                m_unit_desc = UnitDescription::create(m_active_unit);
+                addChild(m_unit_desc);
+            }
+        }
+        else
+        {
+            removeChild(m_unit_desc);
+            m_unit_desc = nullptr;
+        }
+    };
+
+    mouse_point_handler::addListenerToNode(fighter_sprite, desc_callback);
+
+    return fighter_sprite;
 }
 
 bool Fighter::isDead() const
@@ -275,6 +296,7 @@ void Fighter::initSpells()
         {
             removeChild(m_spell_desc);
             m_spell_desc = nullptr;
+            m_curr_spell = -1;
         }
     };
 
@@ -292,6 +314,12 @@ void Fighter::initSpells()
             const auto& spell = profile::spells.find(m_active_unit.spells_id[idx]);
             CCASSERT(spell != profile::spells.end(), "Invalid spell id");
             m_spell_desc = SpellDescription::create(spell->second);
+            addChild(m_spell_desc);
+
+            const cocos2d::Size visible_size = cocos2d::Director::getInstance()->getVisibleSize();
+
+            const cocos2d::Vec2 desc_pos = convertToNodeSpace({ visible_size.width * 0.5f, visible_size.height * 0.25f });
+            m_spell_desc->setPosition(desc_pos);
         }
     };
 

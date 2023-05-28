@@ -5,9 +5,9 @@
  *
 \**************************************/
 
-#include "UnitsView.h"
+#include "SpellView.h"
 
-#include "UnitDescription.h"
+#include "SpellDescription.h"
 
 #include "Helpers/MousePointHandler.h"
 
@@ -18,7 +18,7 @@
 #include <cocos/ui/UIButton.h>
 #include <cocos/2d/CCSprite.h>
 
-namespace units_view
+namespace spell_view
 {
     namespace
     {
@@ -26,7 +26,7 @@ namespace units_view
         constexpr cocos2d::ui::Widget::TextureResType PlistType = cocos2d::ui::Widget::TextureResType::PLIST;
     }
 
-    cocos2d::Node* createView(const std::vector<Unit>& units, cocos2d::Vec2 pos, cocos2d::Size size)
+    cocos2d::Node* createView(const std::vector<uint32_t>& spells, cocos2d::Vec2 pos, cocos2d::Size size)
     {
         auto scroll = cocos2d::ui::ScrollView::create();
         scroll->setDirection(cocos2d::ui::ScrollView::Direction::HORIZONTAL);
@@ -39,23 +39,27 @@ namespace units_view
 
         cocos2d::Size inner_size = { 0.0f, size.height };
 
-        for (size_t i = 0u; i < units.size(); i++)
+        for (size_t i = 0u; i < spells.size(); i++)
         {
-            cocos2d::ui::Button* unit_button = cocos2d::ui::Button::create(
-                units[i].sprite_name,
-                units[i].sprite_name,
-                units[i].sprite_name,
+            const auto& spell_it = profile::spells.find(spells[i]);
+            CCASSERT(spell_it != profile::spells.end(), "Invalid spell id");
+
+            const auto& spell = spell_it->second;
+            cocos2d::ui::Button* spell_btn = cocos2d::ui::Button::create(
+                spell.sprite_id,
+                spell.sprite_id,
+                spell.sprite_id,
                 PlistType
             );
 
-            unit_button->setAnchorPoint({ 0.5f, 0.5f });
+            spell_btn->setAnchorPoint({ 0.5f, 0.5f });
 
-            const cocos2d::Size max_node_size = unit_button->getContentSize() * SelectedScale;
-            unit_button->setPosition({ inner_size.width + max_node_size.width * 0.5f, max_node_size.height * 0.5f });
+            const cocos2d::Size max_node_size = spell_btn->getContentSize() * SelectedScale;
+            spell_btn->setPosition({ inner_size.width + max_node_size.width * 0.5f, max_node_size.height * 0.5f });
 
             inner_size.width += max_node_size.width;
-            
-            scroll->addChild(unit_button);
+
+            scroll->addChild(spell_btn);
         }
 
         auto on_scroll_enter = [dirty = true](cocos2d::Node* root, bool result) mutable {
@@ -72,7 +76,7 @@ namespace units_view
             }
         };
 
-        auto on_child_enter = [units](cocos2d::Node* root, bool result, uint32_t idx) {
+        auto on_child_enter = [spells](cocos2d::Node* root, bool result, uint32_t idx) {
             if (result)
             {
                 if (root->getChildren().size() > 0)
@@ -82,8 +86,11 @@ namespace units_view
 
                 const cocos2d::Size visible_size = cocos2d::Director::getInstance()->getVisibleSize();
 
-                UnitDescription* unit_desc = UnitDescription::create(units[idx]);
-                unit_desc->setPosition(root->convertToNodeSpace({ 0.0f, visible_size.height * 0.5f }));
+                SpellDescription* unit_desc = SpellDescription::create(profile::spells.find(spells[idx])->second);
+
+                cocos2d::Node* parent = root->getParent()->getParent();
+                const cocos2d::Vec2 pos = parent->convertToWorldSpace({ parent->getPosition().x, parent->getPosition().y + parent->getContentSize().height * 0.5f });
+                unit_desc->setPosition(root->convertToNodeSpace(pos));
                 unit_desc->setAnchorPoint({ 0.0f, 0.5f });
 
                 root->addChild(unit_desc);

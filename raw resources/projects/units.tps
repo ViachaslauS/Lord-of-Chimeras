@@ -98,7 +98,7 @@
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
-            <enum type="AlgorithmSettings::SizeConstraints">AnySize</enum>
+            <enum type="AlgorithmSettings::SizeConstraints">WordAligned</enum>
             <key>forceSquared</key>
             <false/>
             <key>maxRects</key>
@@ -179,7 +179,50 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../units/ogre.png</key>
+            <key type="filename">../units/evade.png</key>
+            <key type="filename">../units/hit.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,32,64,64</rect>
+                <key>scale9Paddings</key>
+                <rect>32,32,64,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../units/knight.png</key>
+            <key type="filename">../units/spell_0.png</key>
+            <key type="filename">../units/spell_1.png</key>
+            <key type="filename">../units/spell_10.png</key>
+            <key type="filename">../units/spell_11.png</key>
+            <key type="filename">../units/spell_2.png</key>
+            <key type="filename">../units/spell_3.png</key>
+            <key type="filename">../units/spell_4.png</key>
+            <key type="filename">../units/spell_5.png</key>
+            <key type="filename">../units/spell_6.png</key>
+            <key type="filename">../units/spell_7.png</key>
+            <key type="filename">../units/spell_8.png</key>
+            <key type="filename">../units/spell_9.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,8,16,16</rect>
+                <key>scale9Paddings</key>
+                <rect>8,8,16,16</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../units/unit_0.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
